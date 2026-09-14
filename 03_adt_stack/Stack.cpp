@@ -10,22 +10,30 @@
 
 void Stack::push(int value) {
     // TODO: add value to the top of data_ (vector has a method for this)
+    data[topIndex] = value;
+    topIndex++;
 }
-
+//Changed to int as defined in Stack.h per instruction
 void Stack::pop() {
     // TODO: if data_ isn't empty, remove the top element
+    if (topIndex > 0) {
+        topIndex--;
+    }
 }
-
+//Defined top in Stack.h to handle errors
 int Stack::top() const {
     // TODO: return the top element of data_
+    return data[topIndex];
     // undefined if empty -- callers should check isEmpty() first. We'll
     // harden this kind of thing later in the course.
 }
 
 bool Stack::isEmpty() const {
     // TODO: return whether data_ has zero elements
+    return topIndex == 0;
 }
 
 int Stack::size() const {
     // TODO: return how many elements are in data_ (cast to int)
+    return topIndex;
 }

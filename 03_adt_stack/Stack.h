@@ -12,21 +12,19 @@
 #pragma once
 
 #include <vector>
-
+//Stack copied as instructed
 class Stack {
 public:
-    void push(int value);   // add to the top
-    void pop();              // remove the top (does nothing if empty)
-    int top() const;         // look at the top without removing it
+    Stack();
+    void push(int value);
+    void pop(); //changed to void since there is no return
+    int peek() const;
+    int top() const; //added top since it wasn't defined in sample code
     bool isEmpty() const;
+    bool isFull() const;
     int size() const;
 
 private:
-    // This is the REPRESENTATION. It's private on purpose: nothing
-    // outside this class should touch data_ directly, or depend on it
-    // being a vector specifically. If we swap this out for a linked
-    // list next semester, every .cpp file that #includes this header
-    // and only calls push/pop/top/isEmpty/size doesn't need to change
-    // at all.
-    std::vector<int> data_;
+    int data[100];
+    int topIndex;
 };
