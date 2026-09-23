@@ -1,52 +1,49 @@
-# pragma once
 #include <iostream>
-using namespace std;
+#include "List.h"
 
-template <typename  T>
-class ArrayList {
+class ArrayList : public List<T> {
     public:
-        ArrayList():size(0) {
-
+    void addFront(T* value) override {
+        if (size_ >= CAPACITY) {
+            std::cout << "ArrayList is full." << std::endl;
+            return;
         }
-        void add(T item) {
-            if (size>=CAPACITY) {
-                cout<<"CAPACITY FULL"<<endl;
-                return;
-            }
-            data[size++] = item;
-            for (int i =size; i >0; i--) {
-                data[i] = data[i-1];
-            }
-            data[0]=item;
-            size++;
+        for (int i = size_; i > 0; --i) {
+            data_[i] = data_[i - 1];
         }
-        void deleteFront() {
-            if (size<=0) {
-                cout<<"CAPACITY EMPTY"<<endl;
-                return;
-            }
-            for (int i =0; i<size-1; i++) {
-                data[i] = data[i+1];
-            }
-
-            size--;
+        data_[0] = value;
+        ++size_;
+    }
+    void deleteFront() override {
+        if (size_ == 0) {
+            std::cout << "ArrayList is empty." << std::endl;
+            return;
         }
-    bool search(T item) {
-            if (size<=0) {
-                cout<<"CAPACITY EMPTY"<<endl;
-                return false;
-            }
-            for (int i =0; i<size; i++) {
-                if (data[i]==item) {
-                    return true;
-                }
-            }
-            return false;
+        delete data_[0];
+        for (int i = 0; i < size_ - 1; ++i) {
+            data_[i] = data_[i + 1];
         }
-    private:
-        static const int CAPACITY = 20;
-        T data[CAPACITY];
-        int size;
-
-
+        --size_;
+    }
+    bool search(T* value) const override {
+        for (int i = 0; i < size_; ++i) {
+            if (*data_[i] == *value) return true;
+        }
+        return false;
+    }
+    void print() const override {
+        for (int i = 0; i < size_; ++i) {
+            std::cout << *data_[i] << ",";
+        }
+        std::cout << std::endl;
+    }
+    ~ArrayList() override {
+        for (int i = 0; i < size_; ++i) {
+            delete data_[i];
+        }
+    }
+private:
+    static const int CAPACITY = 20;
+    T* data_[CAPACITY];
+    int size_;
 };
